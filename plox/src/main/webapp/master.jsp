@@ -31,15 +31,19 @@
         <ul>
          
          <li>
-              <form action="home.jsp" method="POST">
+           
+
+             
+ 			<form action="home.jsp" method="POST">
              
                  <div class="logout-btn">
                      <input type="submit" style="background-color: hsl(351, 4%, 66%)"
                          value=" LogOut ">
                  </div>        
              </form>    
+             
          </li>
-          <li>
+         <li>
          <form action="dashboard.jsp" method="POST">
              
                  <div class="Home-btn">
@@ -48,6 +52,7 @@
                  </div>        
              </form>   
           </li>
+         
         </ul>
         
         <div class="dropdown">
@@ -67,8 +72,9 @@
     <div class="container">
       <div class="main-content"></div>
     </div>
-<br><br><h3 class ="center">Renting Report For Hangar Owners</h3><br><br>
 
+<!--Database connect-->
+<br><br><h3 class ="center">Master Report For Plane Owners</h3><br><br>
 <table style="width: 100%;" class="greenTable" border="1">
              <tr>
                 <td>Hangar ID</td>
@@ -94,14 +100,14 @@
 		con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Plox?autoReconnect=true&useSSL=false", "root", "0906clcl");
 		Statement stmt = con.createStatement();
 		int accountId = -1;
-		ResultSet res1 = stmt.executeQuery("SELECT accountId FROM plox.account WHERE accountId=" + session.getAttribute("sessId") + "");
+		ResultSet res1 = stmt.executeQuery("SELECT accountId FROM plox.account WHERE accountId='" + session.getAttribute("sessid") + "'");
 		
- 		if(res1.next()) {
+ 		while(res1.next()) {
  			accountId = res1.getInt("accountId");
  			
  		}
  		/* String subq1 = "SELECT Rented_By FROM renting WHERE Rented_By = '" + res1 + "'"; */
-		ResultSet master = stmt.executeQuery("SELECT  h.hangar_id, h.name, h.city, h.address, h.Dimension, h.Enclosure_Type, h.Price, h.Available_Duration, h.Heating, h.Water_and_Electricity, h.Technician, u.First_Name, u.Last_Name, u.address FROM Hangar h JOIN Rental_Period rp ON h.Rented_By = rp.Rentee_User JOIN User u ON rp.Rentee_User = u.User_ID WHERE h.Rented_By is not null  AND h.Owned_By = '2'");
+		ResultSet master = stmt.executeQuery("SELECT  h.hangar_id, h.name, h.city, h.address, h.Dimension, h.Enclosure_Type, h.Price, h.Available_Duration, h.Heating, h.Water_and_Electricity, h.Technician, u.First_Name, u.Last_Name, u.address FROM Hangar h JOIN User u ON h.Owned_By = u.User_ID WHERE h.Rented_By ='4'");
 		
 	%>
 	
